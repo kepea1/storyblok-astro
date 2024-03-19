@@ -5,7 +5,9 @@ const { data } = await storyblokApi.get("cdn/stories/config", {
   version: "draft",
   resolve_links: "url",
 });
+console.log(data);
 const headerMenu = data?.story?.content?.header_menu;
+console.log(headerMenu);
 ---
 
 <header class="w-full h-24 bg-[#f7f6fd]">

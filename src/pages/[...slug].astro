@@ -1,4 +1,8 @@
 ---
+// This is the Astro component that will be used to render the page its (normally called index.astro)
+// it uses the storyblok API to fetch the content of the page and then renders it using the StoryblokComponent
+// The file is called [slug].astro because the slug is dynamic and will be used to fetch the content of the page and is renderd to the slot in BaseLayout.astro
+
 import { useStoryblokApi } from "@storyblok/astro";
 import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
@@ -35,6 +39,9 @@ const { data } = await storyblokApi.get(
 const story = data.story;
 ---
 
+<!-- 
+  the StoryblokComponent is rendered to the slot in BaseLayout.astro
+-->
 <BaseLayout>
   <StoryblokComponent blok={story.content} />
 </BaseLayout>

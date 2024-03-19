@@ -1,19 +1,19 @@
 ---
-
-import Header from '../components/Header.astro'
+import Header from "../components/Header.astro";
 ---
 
-
-
-
-<html lang='en'>
+<!-- this is the layout for the entire site
+atm it has the Header component and a slot for the page content, the Header component will be included in every page
+The slot will be replaced with the content of the page
+the slug of the page will be used to fetch the content from Storyblok -->
+<html lang="en">
   <head>
-    <meta charset='UTF-8' />
-    <meta name='viewport' content='width=device-width' />
-    <link rel='icon' type='image/x-icon' href='/favicon.ico' />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <title>@storyblok/astro</title>
   </head>
-  <body class='container mx-auto'>
+  <body class="container mx-auto">
     <Header />
     <slot />
   </body>
