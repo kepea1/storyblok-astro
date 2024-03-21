@@ -1,5 +1,7 @@
 ---
 import Header from "../components/Header.astro";
+
+const { language, langSwitch } = Astro.props;
 ---
 
 <!-- this is the layout for the entire site
@@ -14,7 +16,7 @@ the slug of the page will be used to fetch the content from Storyblok -->
     <title>@storyblok/astro</title>
   </head>
   <body class="container mx-auto">
-    <Header />
+    <Header langSwitch={langSwitch} language={language} />
     <slot />
   </body>
 </html>

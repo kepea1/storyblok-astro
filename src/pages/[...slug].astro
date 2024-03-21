@@ -1,4 +1,36 @@
 ---
+import { useStoryblokApi } from "@storyblok/astro";
+// @ts-ignore
+import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import parseUrl from "../utils/parseUrl";
+import isPreview from "../utils/isPreview";
+import generateStaticPaths from "../utils/generateStaticPaths";
+
+export async function getStaticPaths() {
+  //We have moved all the code to a generateStaticPaths() function.
+  return await generateStaticPaths();
+}
+const params = Astro.params;
+let props = isPreview() ? parseUrl(params?.slug) : Astro.props;
+const { slug, language, langSwitch } = props;
+const storyblokApi = useStoryblokApi();
+const { data } = await storyblokApi.get(
+  `cdn/stories/${slug === undefined ? "home" : slug}`,
+  {
+    version: isPreview() ? "draft" : "published",
+    resolve_relations: ["popular-articles.articles"],
+    language,
+  }
+);
+const story = data.story;
+---
+
+<BaseLayout langSwitch={langSwitch} language={language}>
+  <StoryblokComponent language={language} blok={story.content} />
+</BaseLayout>
+
+<!-- ---
 // This is the Astro component that will be used to render the page its (normally called index.astro)
 // it uses the storyblok API to fetch the content of the page and then renders it using the StoryblokComponent
 // The file is called [slug].astro because the slug is dynamic and will be used to fetch the content of the page and is renderd to the slot in BaseLayout.astro
@@ -12,6 +44,7 @@ export async function getStaticPaths() {
 
   const { data } = await storyblokApi.get("cdn/links", {
     version: "draft",
+    resolve_relations: ["popular-articles.articles"],
   });
   let links = data.links;
   links = Object.values(links);
@@ -38,10 +71,8 @@ const { data } = await storyblokApi.get(
 
 const story = data.story;
 ---
-
-<!-- 
   the StoryblokComponent is rendered to the slot in BaseLayout.astro
 -->
-<BaseLayout>
+<!-- <BaseLayout>
   <StoryblokComponent blok={story.content} />
-</BaseLayout>
+</BaseLayout> -->
