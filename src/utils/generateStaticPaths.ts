@@ -16,7 +16,7 @@ export default async function generateStaticPaths() {
       let slug = link.slug === "home" ? undefined : link.slug;
       //This will be used for generating all the urls for astro
       let full_url = language === "en" ? slug : `${language}/${slug ?? ""}`;
-      //This will let us change the url for diffrent versions
+      //This will let us change the url for different versions
       let langSwitch = {};
       languages.forEach((lang) => {
         langSwitch = {
